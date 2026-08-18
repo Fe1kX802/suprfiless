@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скачать файл</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #c940b9 0%, #f400ab 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgb(246, 146, 255);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .download-btn {
+            background: linear-gradient(165deg, #f7f5f9 0%, #39393c 150%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin: 10px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .download-btn:active {
+            transform: translateY(0);
+        }
+
+        .file-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .error {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💎</h1>
+        
+        <div class="buttons-container">
+            <button class="download-btn" onclick="downloadFile('file1')">
+                Сертификат соответствия
+            </button>
+            
+            <button class="download-btn" onclick="downloadFile('file2')">
+                Доверенность на использование
+            </button>
+        </div>
+        
+        <div class="error" id="errorMsg">
+            Ошибка при скачивании файла
+        </div>
+    </div>
+
+    <script>
+        // УКАЖИТЕ ИМЕНА ВАШИХ ФАЙЛОВ ЗДЕСЬ
+        const FILES = {
+            file1: {
+                name: 'Сертификат соответствия 2026.pdf',
+                path: './sert.pdf'
+            },
+            file2: {
+                name: 'Доверенность_на_использование_СС_07579_Филиппов.pdf',
+                path: './dov.pdf'
+            }
+        };
+        
+        function downloadFile(fileKey) {
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.style.display = 'none';
+            
+            const file = FILES[fileKey];
+            
+            if (!file) {
+                errorMsg.textContent = 'Файл не найден в конфигурации!';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            
+            // Создаем временную ссылку для скачивания
+            const link = document.createElement('a');
+            link.href = file.path;
+            link.download = file.name;
+            
+            // Добавляем обработчики ошибок
+            link.onerror = function() {
+                errorMsg.textContent = `Файл "${file.name}" не найден! Проверьте путь к файлу.`;
+                errorMsg.style.display = 'block';
+            };
+            
+            // Имитируем клик по ссылке
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
