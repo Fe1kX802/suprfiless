@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Скачать файл</title>
+    <title>Открыть файл</title>
     <style>
         * {
             margin: 0;
@@ -64,15 +64,6 @@
             transform: translateY(0);
         }
 
-        .file-info {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f5f5f5;
-            border-radius: 8px;
-            color: #555;
-            font-size: 14px;
-        }
-
         .error {
             color: #e74c3c;
             margin-top: 15px;
@@ -93,34 +84,32 @@
         <h1>💎</h1>
         
         <div class="buttons-container">
-            <button class="download-btn" onclick="downloadFile('file1')">
-                Сертификат соответствия
+            <button class="download-btn" onclick="openFile('file1')">
+                📄 Открыть файл 1
             </button>
             
-            <button class="download-btn" onclick="downloadFile('file2')">
-                Доверенность на использование
+            <button class="download-btn" onclick="openFile('file2')">
+                📦 Открыть файл 2
             </button>
         </div>
         
         <div class="error" id="errorMsg">
-            Ошибка при скачивании файла
+            Ошибка при открытии файла
         </div>
     </div>
 
     <script>
-        // УКАЖИТЕ ИМЕНА ВАШИХ ФАЙЛОВ ЗДЕСЬ
+        // УКАЖИТЕ АДРЕСА ВАШИХ ФАЙЛОВ ЗДЕСЬ
         const FILES = {
             file1: {
-                name: 'Сертификат соответствия 2026.pdf',
-                path: './sert.pdf'
+                url: 'https://example.com/file1.pdf'
             },
             file2: {
-                name: 'Доверенность_на_использование_СС_07579_Филиппов.pdf',
-                path: './dov.pdf'
+                url: 'https://example.com/file2.zip'
             }
         };
         
-        function downloadFile(fileKey) {
+        function openFile(fileKey) {
             const errorMsg = document.getElementById('errorMsg');
             errorMsg.style.display = 'none';
             
@@ -132,21 +121,8 @@
                 return;
             }
             
-            // Создаем временную ссылку для скачивания
-            const link = document.createElement('a');
-            link.href = file.path;
-            link.download = file.name;
-            
-            // Добавляем обработчики ошибок
-            link.onerror = function() {
-                errorMsg.textContent = `Файл "${file.name}" не найден! Проверьте путь к файлу.`;
-                errorMsg.style.display = 'block';
-            };
-            
-            // Имитируем клик по ссылке
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            // Открываем файл в новой вкладке браузера
+            window.open(file.url, '_blank');
         }
     </script>
 </body>
